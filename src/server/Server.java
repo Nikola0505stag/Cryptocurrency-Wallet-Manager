@@ -23,7 +23,7 @@ public class Server {
 
             InetAddress serverAddress = Inet4Address.getLocalHost();
             System.out.println("Server started on" + serverAddress.getHostAddress() +
-                    "and listening for connection requests on port" + SERVER_PORT);
+                    "and listening for connection requests on port " + SERVER_PORT);
 
             Socket clientSocket;
 
