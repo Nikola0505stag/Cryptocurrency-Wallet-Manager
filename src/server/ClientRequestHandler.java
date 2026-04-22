@@ -1,16 +1,21 @@
 package server;
 
+import data.User;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Map;
 
 public class ClientRequestHandler implements Runnable{
     private final Socket socket;
+    private final Map<String, User> users;
 
-    public ClientRequestHandler(Socket socket) {
+    public ClientRequestHandler(Socket socket, Map<String, User> users) {
         this.socket = socket;
+        this.users = users;
     }
 
 
@@ -34,6 +39,10 @@ public class ClientRequestHandler implements Runnable{
 
                 // later for methods from user class
                 out.println("Echo from server: " + message);
+
+                if (message.startsWith("register")) {
+                    out.println("You try to register!");
+                }
             }
 
         } catch (IOException e) {

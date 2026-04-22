@@ -1,15 +1,21 @@
 package server;
 
+import data.User;
+
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Server {
     private static final int SERVER_PORT = 9904;
+    Map<String, User> users = new ConcurrentHashMap<>();
 
     static void main() {
         new Server().start();
@@ -32,7 +38,7 @@ public class Server {
                 System.out.println("Accepted connection request from client" + clientSocket.getInetAddress() + ":" +
                         clientSocket.getPort());
 
-                ClientRequestHandler clientHandler = new ClientRequestHandler(clientSocket);
+                ClientRequestHandler clientHandler = new ClientRequestHandler(clientSocket, users);
                 executor.execute(clientHandler);
 
             }
