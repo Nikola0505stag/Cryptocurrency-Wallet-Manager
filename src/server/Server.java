@@ -32,7 +32,8 @@ public class Server {
                 System.out.println("Accepted connection request from client" + clientSocket.getInetAddress() + ":" +
                         clientSocket.getPort());
 
-                //TODO: some thead + executor to execute thread!
+                ClientRequestHandler clientHandler = new ClientRequestHandler(clientSocket);
+                executor.execute(clientHandler);
 
             }
 
