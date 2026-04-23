@@ -41,7 +41,7 @@ public class RegisterRefactoringTest {
     void testParseRegisterWithSpecialCharacters() {
         String input = "register --username=Nikola --password=p@ss123!";
         var result = RegisterRefactoring.parseRegister(input);
-        
+
         assertEquals("p@ss123!", result.password());
     }
 
