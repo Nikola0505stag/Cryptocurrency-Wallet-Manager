@@ -1,6 +1,11 @@
 package commands;
 
 import data.User;
+import helper.MyJDBC;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Map;
 
 public class RegisterCommand implements Command{
@@ -17,11 +22,26 @@ public class RegisterCommand implements Command{
 
     @Override
     public String execute() {
-        User newUser = new User(username, password);
-
-        if (users.putIfAbsent(username, newUser) == null) {
-            return "Successfully registered user " + username;
+        if (users.containsKey(username)) {
+            return "User with username " + username + " already exists.";
         }
-        return "User with username " + username + " already exists.";
+
+        User newUser = new User(username, password);
+        String sql = "INSERT INTO Users (username, password) VALUES (?, ?)";
+
+        try (Connection conn = MyJDBC.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+            pstmt.executeUpdate();
+
+            users.put(username, newUser);
+            return "Successfully registered user " + username;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "Error: Could not register ussr in database";
+        }
     }
 }
