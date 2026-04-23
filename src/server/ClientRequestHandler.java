@@ -1,7 +1,10 @@
 package server;
 
+import commands.Command;
+import commands.RegisterCommand;
 import data.User;
-
+import helper.RegisterRefactoring;
+import helper.UserCredentials;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -28,6 +31,7 @@ public class ClientRequestHandler implements Runnable{
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))){
 
             String message;
+            Command command = null;
 
             while ((message = in.readLine()) != null) {
                 System.out.println("Client said: " + message);
@@ -37,11 +41,22 @@ public class ClientRequestHandler implements Runnable{
                     break;
                 }
 
-                // later for methods from user class
                 out.println("Echo from server: " + message);
 
                 if (message.startsWith("register")) {
-                    out.println("You try to register!");
+                    UserCredentials creds = RegisterRefactoring.parseRegister(message);
+
+                    if (creds != null){
+                        command = new RegisterCommand(creds.username(), creds.password(), users);
+                        String result = command.execute();
+                        out.println(result);
+                    } else {
+                        out.println("Invalid register format! Try again.");
+                    }
+                }
+
+                if (command == null) {
+                    out.println("Invalid command! Try again.");
                 }
             }
 

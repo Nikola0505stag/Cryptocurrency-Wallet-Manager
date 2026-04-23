@@ -35,7 +35,7 @@ public class RegisterCommandTest {
 
         RegisterCommand command = new RegisterCommand("Nikola", "new_pass", users);
         String response = command.execute();
-        
+
         assertTrue(response.contains("already exists"), "Response should indicate duplicate user");
         assertEquals("old_pass", users.get("Nikola").getPassword(), "Original password should not be overwritten");
     }
