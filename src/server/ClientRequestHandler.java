@@ -31,9 +31,11 @@ public class ClientRequestHandler implements Runnable{
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))){
 
             String message;
-            Command command = null;
+
 
             while ((message = in.readLine()) != null) {
+                Command command = null;
+                
                 if (message.equalsIgnoreCase("quit")) {
                     out.println("Bye bye!");
                     break;
