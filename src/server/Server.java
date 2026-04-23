@@ -1,6 +1,7 @@
 package server;
 
 import data.User;
+import helper.MyJDBC;
 
 import java.io.IOException;
 import java.net.Inet4Address;
@@ -14,7 +15,7 @@ import java.util.concurrent.Executors;
 
 public class Server {
     private static final int SERVER_PORT = 9904;
-    Map<String, User> users = new ConcurrentHashMap<>();
+    Map<String, User> users = new ConcurrentHashMap<>(MyJDBC.loadUsers());
 
     static void main() {
         new Server().start();
