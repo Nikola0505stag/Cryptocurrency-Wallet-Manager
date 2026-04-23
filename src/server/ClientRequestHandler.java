@@ -34,14 +34,10 @@ public class ClientRequestHandler implements Runnable{
             Command command = null;
 
             while ((message = in.readLine()) != null) {
-                System.out.println("Client said: " + message);
-
                 if (message.equalsIgnoreCase("quit")) {
                     out.println("Bye bye!");
                     break;
                 }
-
-                out.println("Echo from server: " + message);
 
                 if (message.startsWith("register")) {
                     UserCredentials creds = RegisterRefactoring.parseRegister(message);

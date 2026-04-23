@@ -22,6 +22,6 @@ public class RegisterCommand implements Command{
         if (users.putIfAbsent(username, newUser) == null) {
             return "Successfully registered user " + username;
         }
-        return "User with username " + username + "already exists.";
+        return "User with username " + username + " already exists.";
     }
 }
