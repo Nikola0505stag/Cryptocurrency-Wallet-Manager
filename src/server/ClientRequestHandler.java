@@ -1,8 +1,10 @@
 package server;
 
 import commands.Command;
+import commands.LogInCommand;
 import commands.RegisterCommand;
 import data.User;
+import helper.LogInRefactoring;
 import helper.RegisterRefactoring;
 import helper.UserCredentials;
 import java.io.BufferedReader;
@@ -17,11 +19,13 @@ public class ClientRequestHandler implements Runnable{
     private final Socket socket;
     private final Map<String, User> users;
     private final Set<User> loggedInUsers;
+    private User loggedInUser;
 
     public ClientRequestHandler(Socket socket, Map<String, User> users, Set<User> loggedInUsers) {
         this.socket = socket;
         this.users = users;
         this.loggedInUsers = loggedInUsers;
+        loggedInUser = null;
     }
 
 
@@ -47,7 +51,7 @@ public class ClientRequestHandler implements Runnable{
                 if (message.startsWith("register")) {
                     UserCredentials creds = RegisterRefactoring.parseRegister(message);
 
-                    if (creds != null){
+                    if (creds != null) {
                         command = new RegisterCommand(creds.username(), creds.password(), users);
                         String result = command.execute();
                         out.println(result);
@@ -55,7 +59,20 @@ public class ClientRequestHandler implements Runnable{
                         out.println("Invalid register format! Try again.");
                     }
                 } else if (message.startsWith("login")) {
+                    UserCredentials creds = LogInRefactoring.parseLogin(message);
 
+                    if (creds != null) {
+                        command = new LogInCommand(creds.username(), creds.password(), loggedInUser, users, loggedInUsers);
+                        String result = command.execute();
+
+                        if (result.equals("Successful registration!")) {
+                            loggedInUser = users.get(creds.username());
+                        }
+
+                        out.println(result);
+                    } else {
+                        out.println("Invalid login format! Try again.");
+                    }
                 }
 
                 if (command == null) {
