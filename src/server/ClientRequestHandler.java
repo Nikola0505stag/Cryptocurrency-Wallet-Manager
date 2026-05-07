@@ -11,14 +11,17 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Map;
+import java.util.Set;
 
 public class ClientRequestHandler implements Runnable{
     private final Socket socket;
     private final Map<String, User> users;
+    private final Set<User> loggedInUsers;
 
-    public ClientRequestHandler(Socket socket, Map<String, User> users) {
+    public ClientRequestHandler(Socket socket, Map<String, User> users, Set<User> loggedInUsers) {
         this.socket = socket;
         this.users = users;
+        this.loggedInUsers = loggedInUsers;
     }
 
 
@@ -51,6 +54,8 @@ public class ClientRequestHandler implements Runnable{
                     } else {
                         out.println("Invalid register format! Try again.");
                     }
+                } else if (message.startsWith("login")) {
+
                 }
 
                 if (command == null) {
