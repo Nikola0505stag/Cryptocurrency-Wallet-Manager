@@ -43,7 +43,7 @@ public class LogInCommand implements Command{
         }
 
         loggedInUsers.add(currUser);
-        return "Successful registration!";
+        return "Successful login!";
 
     }
 

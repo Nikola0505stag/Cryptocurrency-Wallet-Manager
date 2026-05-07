@@ -65,7 +65,7 @@ public class ClientRequestHandler implements Runnable{
                         command = new LogInCommand(creds.username(), creds.password(), loggedInUser, users, loggedInUsers);
                         String result = command.execute();
 
-                        if (result.equals("Successful registration!")) {
+                        if (result.equals("Successful login!")) {
                             loggedInUser = users.get(creds.username());
                         }
 
