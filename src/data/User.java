@@ -3,6 +3,7 @@ package data;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class User {
 
@@ -55,5 +56,17 @@ public class User {
             throw new IllegalArgumentException("Invalid money - negative!");
         }
         this.balance += money;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Double.compare(balance, user.balance) == 0 && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(crypto, user.crypto);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, password, balance, crypto);
     }
 }

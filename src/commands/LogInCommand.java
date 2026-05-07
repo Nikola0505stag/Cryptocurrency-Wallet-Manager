@@ -15,7 +15,7 @@ public class LogInCommand implements Command{
     public LogInCommand(String username, String password, User loggedInUser, Map<String, User> users, Set<User> loggedInUsers) {
         this.username = username;
         this.password = password;
-        this.loggedInUser = null;
+        this.loggedInUser = loggedInUser;
         this.users = users;
         this.loggedInUsers = loggedInUsers;
     }
@@ -39,7 +39,7 @@ public class LogInCommand implements Command{
         User currUser = users.get(username);
 
         if (loggedInUsers.contains(currUser)) {
-            return "You are already logged in!";
+            return "User is already logged in!";
         }
 
         loggedInUsers.add(currUser);
