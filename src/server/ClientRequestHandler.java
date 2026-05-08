@@ -2,6 +2,7 @@ package server;
 
 import commands.Command;
 import commands.LogInCommand;
+import commands.PrintAccountCommand;
 import commands.RegisterCommand;
 import data.User;
 import helper.LogInRefactoring;
@@ -73,6 +74,11 @@ public class ClientRequestHandler implements Runnable{
                     } else {
                         out.println("Invalid login format! Try again.");
                     }
+                } else if (message.equals("print --account-details")) {
+                    command = new PrintAccountCommand(loggedInUser);
+                    String result = command.execute();
+
+                    out.println(result);
                 }
 
                 if (command == null) {
