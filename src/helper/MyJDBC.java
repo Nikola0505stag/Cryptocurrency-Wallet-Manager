@@ -17,7 +17,7 @@ public class MyJDBC {
 
     public static Map<String, User> loadUsers() {
         Map<String, User> users = new HashMap<>();
-        String sql = "SELECT username, password FROM Users";
+        String sql = "SELECT username, password, balance FROM Users";
 
         try (Connection conn = getConnection();
             Statement stmt = conn.createStatement();
