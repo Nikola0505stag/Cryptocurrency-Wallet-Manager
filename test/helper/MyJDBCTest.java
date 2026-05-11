@@ -72,4 +72,31 @@ class MyJDBCTest {
                 "Updating balance for non-existent user should not throw an exception.");
     }
 
+    @Test
+    void testUpdatePasswordSuccess() throws SQLException {
+        String username = "test_pass_user";
+        String initialPass = "old_password";
+        String newPass = "secret_new_123";
+
+        try (Connection conn = MyJDBC.getConnection();
+             Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate(String.format(
+                    "INSERT INTO Users (username, password, balance) VALUES ('%s', '%s', 0.0)",
+                    username, initialPass));
+        }
+
+        MyJDBC.updatePassword(username, newPass);
+
+        Map<String, User> users = MyJDBC.loadUsers();
+
+        assertTrue(users.containsKey(username), "User should exist in DB");
+        assertEquals(newPass, users.get(username).getPassword(), "The password in DB was not updated correctly!");
+    }
+
+    @Test
+    void testUpdatePasswordForNonExistentUser() {
+        assertDoesNotThrow(() -> MyJDBC.updatePassword("nobody_here", "some_pass"),
+                "Updating password for non-existent user should not throw an exception.");
+    }
+
 }
