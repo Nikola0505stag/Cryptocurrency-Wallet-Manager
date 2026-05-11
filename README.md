@@ -44,6 +44,7 @@ The application uses a MySQL database named `Register_schema`.
 Once connected, you can use the following commands:
 
 | Command | Description | Example |
+| :--- | :--- | :--- |
 | register --username=<name> --password=<password> | Register a new account | register --username=Nikola --password=123 |
 | login --username=<name> --password=<password> | Log in to your account | login --username=Nikola --password=123 |
 | deposit-money=<amount> | Deposit USD into your wallet | deposit-money=1005.50 |
@@ -68,7 +69,7 @@ Once connected, you can use the following commands:
 ## ⚙️ Configuration
 To connect the server to your local database, update the credentials in src/helper/MyJDBC.java:
 
-    ```Java
+    ``` Java
         private static final String URL = "jdbc:mysql://localhost:3306/Register_schema";
         private static final String USER = "your_root_user";
         private static final String PASSWORD = "your_password";
