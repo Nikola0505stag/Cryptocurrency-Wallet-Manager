@@ -1,10 +1,11 @@
 package server;
 
-import commands.Command;
-import commands.LogInCommand;
-import commands.PrintAccountCommand;
-import commands.RegisterCommand;
+import commands.*;
 import data.User;
+import exceptions.NegativeDepositException;
+import exceptions.WrongDepositCommandException;
+import exceptions.ZeroDepositException;
+import helper.DepositRefactoring;
 import helper.LogInRefactoring;
 import helper.RegisterRefactoring;
 import helper.UserCredentials;
@@ -79,6 +80,16 @@ public class ClientRequestHandler implements Runnable{
                     String result = command.execute();
 
                     out.println(result);
+                } else if (message.startsWith("deposit")) {
+                    try {
+                        double amount = DepositRefactoring.parseAmount(message);
+                        command = new DepositCommand(loggedInUser, amount);
+                        String result = command.execute();
+
+                        out.println(result);
+                    } catch (WrongDepositCommandException | NegativeDepositException | ZeroDepositException e) {
+                        out.println(e.getMessage());
+                    }
                 }
 
                 if (command == null) {
