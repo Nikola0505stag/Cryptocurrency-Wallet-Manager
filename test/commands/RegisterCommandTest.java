@@ -36,13 +36,13 @@ public class RegisterCommandTest {
 
     @Test
     void testExecuteDuplicateRegistration() {
-        users.put("Nikola", new User("Nikola", "old_pass"));
+        users.put("testNikola", new User("Nikola", "old_pass"));
 
-        RegisterCommand command = new RegisterCommand("Nikola", "new_pass", users);
+        RegisterCommand command = new RegisterCommand("testNikola", "new_pass", users);
         String response = command.execute();
 
         assertTrue(response.contains("already exists"), "Response should indicate duplicate user");
-        assertEquals("old_pass", users.get("Nikola").getPassword(), "Original password should not be overwritten");
+        assertEquals("old_pass", users.get("testNikola").getPassword(), "Original password should not be overwritten");
     }
 
     @Test
