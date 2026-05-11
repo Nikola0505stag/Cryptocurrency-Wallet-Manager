@@ -1,6 +1,7 @@
 package commands;
 
 import data.User;
+import helper.MyJDBC;
 
 public class DepositCommand implements Command{
 
@@ -17,6 +18,8 @@ public class DepositCommand implements Command{
         if (loggedInUser == null) {
             return "You are not logged in!";
         }
+
+        MyJDBC.updateBalance(loggedInUser.getUsername(), amount);
 
         loggedInUser.depositMoney(amount);
         return "Money deposited!";
