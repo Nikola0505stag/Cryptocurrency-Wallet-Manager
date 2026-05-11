@@ -26,7 +26,12 @@ public class MyJDBC {
             while (rs.next()) {
                 String u = rs.getString("username");
                 String p = rs.getString("password");
-                users.put(u, new User(u,p));
+                double b = rs.getDouble("balance");
+
+                User user = new User(u, p);
+                user.setBalance(b);
+
+                users.put(u, user);
             }
 
         } catch (SQLException e) {
@@ -35,5 +40,19 @@ public class MyJDBC {
         }
 
         return users;
+    }
+
+    public static void updateBalance(String username, double amount) {
+        String sql = "UPDATE Users SET balance = balance + ? WHERE username = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setDouble(1, amount);
+            pstmt.setString(2, username);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println("Could not update money");
+            e.printStackTrace();
+        }
     }
 }

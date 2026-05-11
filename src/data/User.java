@@ -35,6 +35,10 @@ public class User {
         this.username = username;
     }
 
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
     public String getUsername() {
         return username;
     }

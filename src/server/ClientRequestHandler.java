@@ -89,6 +89,7 @@ public class ClientRequestHandler implements Runnable{
                         out.println(result);
                     } catch (WrongDepositCommandException | NegativeDepositException | ZeroDepositException e) {
                         out.println(e.getMessage());
+                        continue;
                     }
                 }
 
