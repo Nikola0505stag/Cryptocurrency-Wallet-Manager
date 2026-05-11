@@ -69,12 +69,12 @@ Once connected, you can use the following commands:
 ## ⚙️ Configuration
 To connect the server to your local database, update the credentials in src/helper/MyJDBC.java:
 
-    ``` Java
-        private static final String URL = "jdbc:mysql://localhost:3306/Register_schema";
-        private static final String USER = "your_root_user";
-        private static final String PASSWORD = "your_password";
+``` Java
+    private static final String URL = "jdbc:mysql://localhost:3306/Register_schema";
+    private static final String USER = "your_root_user";
+    private static final String PASSWORD = "your_password";
 
-    ```
+```
 
 ---
 
