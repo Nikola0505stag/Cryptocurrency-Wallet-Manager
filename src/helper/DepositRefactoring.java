@@ -1,6 +1,9 @@
 package helper;
 
+import exceptions.NegativeDeposit;
 import exceptions.WrongDepositCommandException;
+import exceptions.ZeroDeposit;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,9 +19,9 @@ public class DepositRefactoring {
             double depositSum = Double.parseDouble(matcher.group(1));
 
             if (depositSum < 0) {
-
+                throw new NegativeDeposit("Can't deposit negative amount!");
             } else if (depositSum == 0) {
-
+                throw new ZeroDeposit("Can't deposit zero amount!");
             } else {
                 return depositSum;
             }
