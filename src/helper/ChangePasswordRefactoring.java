@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 public class ChangePasswordRefactoring {
 
     private static final Pattern CHANGE_PASSWORD_PATTERN =
-            Pattern.compile("^change-password\\s--old=(\\S+)\\s--new=(\\S+)$");
+            Pattern.compile("^change-password\\s--old-password=(\\S+)\\s--new-password=(\\S+)$");
 
     public static PasswordChangeDetails parseChangePassword(String input) {
         Matcher matcher = CHANGE_PASSWORD_PATTERN.matcher(input);
