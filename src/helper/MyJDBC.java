@@ -51,7 +51,23 @@ public class MyJDBC {
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println("Could not update money");
+            System.out.println("Could not update money!");
+            e.printStackTrace();
+        }
+    }
+
+    public static void updatePassword(String username, String newPassword) {
+        String sql = "UPDATE Users SET password = ? WHERE username = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, newPassword);
+            pstmt.setString(2, username);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println("Could not change password!");
             e.printStackTrace();
         }
     }
