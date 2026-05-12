@@ -108,6 +108,11 @@ public class ClientRequestHandler implements Runnable{
                         out.println(e.getMessage());
                         continue;
                     }
+                } else if (message.equals("list-offerings")) {
+                    command = new ListOfferingsCommand();
+                    String result = command.execute();
+
+                    out.println(result);
                 }
 
                 if (command == null) {
@@ -115,7 +120,7 @@ public class ClientRequestHandler implements Runnable{
                 }
             }
 
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             throw new RuntimeException("There is a problem with the network communication", e);
         }
     }
