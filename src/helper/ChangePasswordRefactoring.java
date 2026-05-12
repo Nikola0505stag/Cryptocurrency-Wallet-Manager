@@ -1,10 +1,6 @@
 package helper;
 
-import exceptions.NegativeDepositException;
 import exceptions.WrongChangePasswordCommandException;
-import exceptions.WrongDepositCommandException;
-import exceptions.ZeroDepositException;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

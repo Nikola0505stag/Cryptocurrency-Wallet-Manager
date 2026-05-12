@@ -49,6 +49,7 @@ Once connected, you can use the following commands:
 | login --username=<name> --password=<password> | Log in to your account | login --username=Nikola --password=123 |
 | deposit-money=<amount> | Deposit USD into your wallet | deposit-money=1005.50 |
 | print --account-details | View your username and balance | print --account-details |
+| change-password --old-password=<oldPass> --new_password=<newPas> | Change your account password | change-password --old-password=nikola --new-password=NIKOLA |
 | list-offerings | Show available cryptocurrencies | list-offerings |
 | buy --offering=<ID> --money=<amount> | Purchase a cryptocurrency | buy --offering=BTC --money=500 |
 | sell --offering=<ID> | Sell all units of a specific asset | sell --offering=BTC |
