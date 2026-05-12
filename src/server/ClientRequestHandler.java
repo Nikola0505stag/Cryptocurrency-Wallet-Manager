@@ -3,12 +3,11 @@ package server;
 import commands.*;
 import data.User;
 import exceptions.NegativeDepositException;
+import exceptions.WrongChangePasswordCommandException;
 import exceptions.WrongDepositCommandException;
 import exceptions.ZeroDepositException;
-import helper.DepositRefactoring;
-import helper.LogInRefactoring;
-import helper.RegisterRefactoring;
-import helper.UserCredentials;
+import helper.*;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -88,6 +87,24 @@ public class ClientRequestHandler implements Runnable{
 
                         out.println(result);
                     } catch (WrongDepositCommandException | NegativeDepositException | ZeroDepositException e) {
+                        out.println(e.getMessage());
+                        continue;
+                    }
+                } else if (message.startsWith("change")) {
+                    try {
+                        PasswordChangeDetails details = ChangePasswordRefactoring.parseChangePassword(message);
+
+                        try {
+                            command = new ChangePasswordCommand(loggedInUser, details.oldPassword(), details.newPassword());
+                            String result = command.execute();
+
+                            out.println(result);
+                        } catch (WrongChangePasswordCommandException e) {
+                            out.println(e.getMessage());
+                            continue;
+                        }
+
+                    } catch (WrongChangePasswordCommandException e) {
                         out.println(e.getMessage());
                         continue;
                     }
