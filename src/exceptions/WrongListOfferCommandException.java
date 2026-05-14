@@ -1,7 +1,6 @@
 package exceptions;
 
 public class WrongListOfferCommandException extends RuntimeException {
-
     public WrongListOfferCommandException(String message) {
         super(message);
     }
