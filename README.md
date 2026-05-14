@@ -51,6 +51,7 @@ Once connected, you can use the following commands:
 | print --account-details | View your username and balance | print --account-details |
 | change-password --old-password=<oldPass> --new_password=<newPas> | Change your account password | change-password --old-password=nikola --new-password=NIKOLA |
 | list-offerings | Show available cryptocurrencies | list-offerings |
+| list-offer=<asset_id> | Show the details about crypto | list-offer=BTC |
 | buy --offering=<ID> --money=<amount> | Purchase a cryptocurrency | buy --offering=BTC --money=500 |
 | sell --offering=<ID> | Sell all units of a specific asset | sell --offering=BTC |
 | get-wallet-summary | Current active investments |	get-wallet-summary |
