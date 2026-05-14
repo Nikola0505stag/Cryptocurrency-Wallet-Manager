@@ -48,11 +48,11 @@ public class Cryptocurrency {
         return (System.currentTimeMillis() - this.timestamp) > thirtyMinutesInMs;
     }
 
-    public void print() {
-        System.out.println("------------------------------");
-        System.out.println("Asset_ID: " + asset_id);
-        System.out.println("Name: " + name);
-        System.out.println("Price in USD: " + price_usd);
-        System.out.println("------------------------------");
+    public String print() {
+        return "------------------------------" + "\n" +
+                "Asset_ID: " + asset_id + "\n" +
+                "Name: " + name + "\n" +
+                "Price in USD: " + price_usd + "\n" +
+                "------------------------------";
     }
 }

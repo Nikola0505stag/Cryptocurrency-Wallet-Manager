@@ -1,5 +1,7 @@
 package server;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import commands.*;
 import data.Cryptocurrency;
 import data.User;
@@ -13,7 +15,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.lang.reflect.Type;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,6 +28,8 @@ public class ClientRequestHandler implements Runnable{
     private final Map<String, Cryptocurrency> crypto;
     private final Set<User> loggedInUsers;
     private User loggedInUser;
+
+    private static Gson GSON = new Gson();
 
     public ClientRequestHandler(Socket socket, Map<String, User> users, Map<String, Cryptocurrency> crypto, Set<User> loggedInUsers) {
         this.socket = socket;
@@ -115,7 +122,16 @@ public class ClientRequestHandler implements Runnable{
                     command = new ListOfferingsCommand();
                     String result = command.execute();
 
-                    out.println(result);
+                    Type listType = new TypeToken<ArrayList<Cryptocurrency>>(){}.getType();
+                    List<Cryptocurrency> currencies = GSON.fromJson(result, listType);
+
+                    for (Cryptocurrency currency : currencies) {
+                        currency.setTimestamp(System.currentTimeMillis());
+                        String id = currency.getAsset_id();
+                        out.println(currency.print());
+                        crypto.put(id, currency);
+                        MyJDBC.updateCrypto(currency);
+                    }
                 }
 
                 if (command == null) {
