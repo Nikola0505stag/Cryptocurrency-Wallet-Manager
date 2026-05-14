@@ -20,7 +20,7 @@ public class ChangePasswordRefactoring {
         }
 
         throw new WrongChangePasswordCommandException("Invalid change password command! \n" +
-                " Format must be: change-password --old-password<pass> --new-password=<pass>");
+                " Format must be: \"change-password --old-password<pass> --new-password=<pass>\"");
 
     }
 
