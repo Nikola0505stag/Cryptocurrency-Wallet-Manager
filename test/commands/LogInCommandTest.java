@@ -5,6 +5,7 @@ import helper.MyJDBC;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,7 +30,7 @@ public class LogInCommandTest {
     }
 
     @Test
-    void testAlreadyLoggedIn() {
+    void testAlreadyLoggedIn() throws IOException, InterruptedException {
         User user = new User("Nikola", "123");
         loggedInUser = user;
         loggedInUsers.add(user);
@@ -45,7 +46,7 @@ public class LogInCommandTest {
     }
 
     @Test
-    void testLoginNonExistentUser() {
+    void testLoginNonExistentUser() throws IOException, InterruptedException {
         User user = new User("Nikola", "123");
 
         Command login = new LogInCommand("Nikola", "123", loggedInUser, users, loggedInUsers);
@@ -58,7 +59,7 @@ public class LogInCommandTest {
     }
 
     @Test
-    void testLoginWithWrongPassword() {
+    void testLoginWithWrongPassword() throws IOException, InterruptedException {
         User user = new User("Nikola", "123");
         users.put("Nikola", user);
 
@@ -72,7 +73,7 @@ public class LogInCommandTest {
     }
 
     @Test
-    void testLoginAnotherDevice() {
+    void testLoginAnotherDevice() throws IOException, InterruptedException {
         User user = new User("Nikola", "123");
         users.put("Nikola",user);
         loggedInUsers.add(user);
@@ -87,7 +88,7 @@ public class LogInCommandTest {
     }
 
     @Test
-    void testSuccessfulLogin() {
+    void testSuccessfulLogin() throws IOException, InterruptedException {
         User user = new User("Nikola", "123");
         users.put("Nikola", user);
 

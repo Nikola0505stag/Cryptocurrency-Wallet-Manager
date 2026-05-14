@@ -5,6 +5,7 @@ import helper.MyJDBC;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,7 +25,7 @@ public class RegisterCommandTest {
     }
 
     @Test
-    void testExecuteSuccessfulRegistration() {
+    void testExecuteSuccessfulRegistration() throws IOException, InterruptedException {
         Command command = new RegisterCommand("Nikola", "123", users);
 
         String response = command.execute();

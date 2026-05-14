@@ -3,12 +3,14 @@ package commands;
 import org.junit.jupiter.api.Test;
 import data.User;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DepositCommandTest {
 
     @Test
-    void testDepositWhenNoLoggedIn() {
+    void testDepositWhenNoLoggedIn() throws IOException, InterruptedException {
         User user = null;
         double amount = 12;
 
@@ -19,7 +21,7 @@ public class DepositCommandTest {
     }
 
     @Test
-    void testDepositWithValidData() {
+    void testDepositWithValidData() throws IOException, InterruptedException {
         User user = new User("Nikola", "password");
         double amount = 12;
 

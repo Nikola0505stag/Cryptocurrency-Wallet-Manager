@@ -99,7 +99,7 @@ public class MyJDBC {
     }
 
     public static void updateCrypto(Cryptocurrency crypto) {
-        String sql = "REPLACE INTO Crypto (asset_id, name, price_usd, last_updated VALUES (?, ?, ?, ?)";
+        String sql = "REPLACE INTO Crypto (asset_id, name, price_usd, last_updated) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
