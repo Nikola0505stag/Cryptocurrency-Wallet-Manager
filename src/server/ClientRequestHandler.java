@@ -1,6 +1,7 @@
 package server;
 
 import commands.*;
+import data.Cryptocurrency;
 import data.User;
 import exceptions.NegativeDepositException;
 import exceptions.WrongChangePasswordCommandException;
@@ -19,12 +20,14 @@ import java.util.Set;
 public class ClientRequestHandler implements Runnable{
     private final Socket socket;
     private final Map<String, User> users;
+    private final Map<String, Cryptocurrency> crypto;
     private final Set<User> loggedInUsers;
     private User loggedInUser;
 
-    public ClientRequestHandler(Socket socket, Map<String, User> users, Set<User> loggedInUsers) {
+    public ClientRequestHandler(Socket socket, Map<String, User> users, Map<String, Cryptocurrency> crypto, Set<User> loggedInUsers) {
         this.socket = socket;
         this.users = users;
+        this.crypto = crypto;
         this.loggedInUsers = loggedInUsers;
         loggedInUser = null;
     }

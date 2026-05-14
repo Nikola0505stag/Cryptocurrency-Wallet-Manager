@@ -1,5 +1,6 @@
 package helper;
 
+import data.Cryptocurrency;
 import data.User;
 
 import java.sql.*;
@@ -40,6 +41,31 @@ public class MyJDBC {
         }
 
         return users;
+    }
+
+    public static Map<String, Cryptocurrency> loadCrypto() {
+        Map<String, Cryptocurrency> crypto = new HashMap<>();
+        String sql = "SELECT asset_id, name, price_usd, last_updated FROM Crypto";
+
+        try (Connection conn = getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                String asset_id = rs.getString("asset_id");
+                String name = rs.getString("name");
+                double price_usd = rs.getDouble("price_usd");
+                long timestamp = rs.getLong("last_updated");
+                Cryptocurrency currency = new Cryptocurrency(asset_id, name, price_usd, timestamp);
+
+                crypto.put(asset_id, currency);
+            }
+        } catch (SQLException e) {
+            System.out.println("Could not load crypto from DB!");
+            e.printStackTrace();
+        }
+
+        return crypto;
     }
 
     public static void updateBalance(String username, double amount) {

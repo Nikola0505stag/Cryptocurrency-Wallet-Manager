@@ -1,5 +1,6 @@
 package server;
 
+import data.Cryptocurrency;
 import data.User;
 import helper.MyJDBC;
 
@@ -17,6 +18,7 @@ import java.util.concurrent.Executors;
 public class Server {
     private static final int SERVER_PORT = 9904;
     Map<String, User> users = new ConcurrentHashMap<>(MyJDBC.loadUsers());
+    Map<String, Cryptocurrency> currencies = new ConcurrentHashMap<>(MyJDBC.loadCrypto());
     Set<User> loggedInUsers = ConcurrentHashMap.newKeySet();
 
     static void main() {
@@ -40,7 +42,7 @@ public class Server {
                 System.out.println("Accepted connection request from client" + clientSocket.getInetAddress() + ":" +
                         clientSocket.getPort());
 
-                ClientRequestHandler clientHandler = new ClientRequestHandler(clientSocket, users, loggedInUsers);
+                ClientRequestHandler clientHandler = new ClientRequestHandler(clientSocket, users, currencies, loggedInUsers);
                 executor.execute(clientHandler);
 
             }
