@@ -13,6 +13,13 @@ public class Cryptocurrency {
         timestamp = System.currentTimeMillis();
     }
 
+    public Cryptocurrency(String asset_id, String name, double price_usd, long timestamp) {
+        this.asset_id = asset_id;
+        this.name = name;
+        this.price_usd = price_usd;
+        this.timestamp = timestamp;
+    }
+
     public String getAsset_id() {
         return asset_id;
     }
@@ -29,6 +36,13 @@ public class Cryptocurrency {
         return timestamp;
     }
 
+    public void setPrice_usd(double price_usd) {
+        this.price_usd = price_usd;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
     public boolean isExpired() {
         long thirtyMinutesInMs = 30 * 60 * 1000;
         return (System.currentTimeMillis() - this.timestamp) > thirtyMinutesInMs;
