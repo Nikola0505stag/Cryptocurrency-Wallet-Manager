@@ -8,7 +8,10 @@ import java.net.http.HttpResponse;
 
 public class ListOfferingsCommand implements Command{
     private static String API_KEY = System.getenv("COINAPI_KEY");
-    private static String URL = "https://rest.coinapi.io/v1/assets/BTC";
+    private static String[] ASSETS = {"BTC", "ETH", "XRP", "SOL", "ADA", "DOT", "DOGE", "AVAX", "LINK", "SHIB", "MATIC", "LTC", "UNI", "BCH", "STX", "FIL", "ARB", "VET", "NEAR", "OP"};
+    private static String FILTER = String.join(",", ASSETS);
+    private static String URL = "https://rest.coinapi.io/v1/assets?filter_asset_id=" + FILTER;
+    
 
     @Override
     public String execute() throws IOException, InterruptedException {
