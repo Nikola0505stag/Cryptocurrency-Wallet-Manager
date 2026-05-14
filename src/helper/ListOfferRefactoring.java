@@ -14,7 +14,7 @@ public class ListOfferRefactoring {
         if (matcher.matches()) {
             String cryptoName = matcher.group(1);
 
-            return cryptoName;
+            return cryptoName.toUpperCase();
         }
 
         throw new WrongListOfferCommandException("Invalid list offer command! \n" +
