@@ -8,7 +8,7 @@ public class ListOfferRefactoring {
     private static final Pattern LIST_OFFER_PATTERN =
             Pattern.compile("^list-offer=(\\S+)$");
 
-    public static String parseChangePassword(String input) {
+    public static String parseAssetId(String input) {
         Matcher matcher = LIST_OFFER_PATTERN.matcher(input);
 
         if (matcher.matches()) {
