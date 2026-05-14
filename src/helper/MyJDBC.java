@@ -97,4 +97,22 @@ public class MyJDBC {
             e.printStackTrace();
         }
     }
+
+    public static void updateCrypto(Cryptocurrency crypto) {
+        String sql = "REPLACE INTO Crypto (asset_id, name, price_usd, last_updated VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, crypto.getAsset_id());
+            pstmt.setString(2, crypto.getName());
+            pstmt.setDouble(3, crypto.getPrice_usd());
+            pstmt.setLong(4, crypto.getTimestamp());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error saving crypto to DB!");
+            e.printStackTrace();
+        }
+    }
 }
