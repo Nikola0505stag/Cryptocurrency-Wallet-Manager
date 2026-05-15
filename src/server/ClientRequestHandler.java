@@ -139,6 +139,11 @@ public class ClientRequestHandler implements Runnable {
                         out.println(e.getMessage());
                         continue;
                     }
+                } else if (message.equals("help")) {
+                    command = new HelpCommand();
+                    String result = command.execute();
+
+                    out.println(result);
                 }
 
                 if (command == null) {
