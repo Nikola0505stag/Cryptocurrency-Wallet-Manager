@@ -5,10 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import commands.*;
 import data.Cryptocurrency;
 import data.User;
-import exceptions.NegativeDepositException;
-import exceptions.WrongChangePasswordCommandException;
-import exceptions.WrongDepositCommandException;
-import exceptions.ZeroDepositException;
+import exceptions.*;
 import helper.*;
 
 import java.io.BufferedReader;
@@ -22,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class ClientRequestHandler implements Runnable{
+public class ClientRequestHandler implements Runnable {
     private final Socket socket;
     private final Map<String, User> users;
     private final Map<String, Cryptocurrency> crypto;
@@ -46,14 +43,14 @@ public class ClientRequestHandler implements Runnable{
 
         try (socket;
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))){
+             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
             String message;
 
 
             while ((message = in.readLine()) != null) {
                 Command command = null;
-                
+
                 if (message.equalsIgnoreCase("quit")) {
                     out.println("Bye bye!");
                     break;
@@ -122,7 +119,8 @@ public class ClientRequestHandler implements Runnable{
                     command = new ListOfferingsCommand();
                     String result = command.execute();
 
-                    Type listType = new TypeToken<ArrayList<Cryptocurrency>>(){}.getType();
+                    Type listType = new TypeToken<ArrayList<Cryptocurrency>>() {
+                    }.getType();
                     List<Cryptocurrency> currencies = GSON.fromJson(result, listType);
 
                     for (Cryptocurrency currency : currencies) {
@@ -131,6 +129,15 @@ public class ClientRequestHandler implements Runnable{
                         out.println(currency.print());
                         crypto.put(id, currency);
                         MyJDBC.updateCrypto(currency);
+                    }
+                } else if (message.startsWith("list-offer")) {
+                    try {
+                        String asset_id = ListOfferRefactoring.parseAssetId(message);
+                        command = new ListOfferCommand(asset_id, crypto);
+                        out.println(command.execute());
+                    } catch (WrongListOfferCommandException | WrongAssetIDException e) {
+                        out.println(e.getMessage());
+                        continue;
                     }
                 }
 
