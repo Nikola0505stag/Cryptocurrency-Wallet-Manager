@@ -55,6 +55,7 @@ Once connected, you can use the following commands:
 | buy --offering=<ID> --money=<amount> | Purchase a cryptocurrency | buy --offering=BTC --money=500 |
 | sell --offering=<ID> | Sell all units of a specific asset | sell --offering=BTC |
 | get-wallet-summary | Current active investments |	get-wallet-summary |
+| help | Prints all functions | help |
 | quit | Disconnect from the server | quit |
 
 --- 
